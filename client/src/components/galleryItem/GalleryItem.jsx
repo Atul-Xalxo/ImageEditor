@@ -17,12 +17,12 @@ const GalleryItem = (props) => {
     >
       {/* <img src={item.media} alt="" /> */}
       <Images
-        path={item.media}
+        src={item.media}
         alt=""
         w={370}
         h={optimizedHeight}
       />
-      <Link to={`/pin/${item.id}`} className="overlay" />
+      <Link to={`/pin/${item._id}`} className="overlay" />
       <button className="saveButton">Save</button>
       <div className="overlayIcons">
         <button>

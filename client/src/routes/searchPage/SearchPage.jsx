@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import { useSearchParams } from "react-router-dom";
+import Gallery from "../../components/gallery/Gallery";
+import "./searchPage.css";
 
 const SearchPage = () => {
-  return (
-    <div>SearchPage</div>
-  )
-}
+  let [searchParams] = useSearchParams();
 
-export default SearchPage
+  const search = searchParams.get("search");
+
+  return <Gallery search={search} />;
+};
+
+export default SearchPage;
+
+//3:00:00s
