@@ -1,7 +1,7 @@
-import { IKImage } from 'imagekitio-react';
-import React from 'react'
+import { IKImage } from "imagekitio-react";
+import React from "react";
 
-const Images = ({path,src,alt,className,w,h}) => {
+const Images = ({ path, src, alt, className, w, h }) => {
   return (
     <>
       <IKImage
@@ -11,7 +11,7 @@ const Images = ({path,src,alt,className,w,h}) => {
         transformation={[
           {
             width: w,
-            height:h,
+            height: h,
           },
         ]}
         alt={alt}
@@ -21,6 +21,6 @@ const Images = ({path,src,alt,className,w,h}) => {
       />
     </>
   );
-}
+};
 
-export default Images
+export default Images;

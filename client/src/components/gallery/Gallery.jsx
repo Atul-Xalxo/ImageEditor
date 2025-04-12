@@ -172,12 +172,12 @@ import axios from "axios";
 //   },
 // ];
 
-const fetchPins = async ({ pageParam, search }) => {
+const fetchPins = async ({ pageParam, search, userId }) => {
  try {
    const res = await axios.get(
      `${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${
        search || ""
-     }`
+     }&userId=${userId || ""}`,
    );
    return res.data;
  } catch (error) {
@@ -185,10 +185,10 @@ const fetchPins = async ({ pageParam, search }) => {
  }
 };
 
-const Gallery = ({ search }) => {
+const Gallery = ({ search,userId}) => {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery({
     queryKey: ["pins", search],
-    queryFn: ({ pageParam = 0 }) => fetchPins({ pageParam, search }),
+    queryFn: ({ pageParam = 0 }) => fetchPins({ pageParam, search,userId }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
   });

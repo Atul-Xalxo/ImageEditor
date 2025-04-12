@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Image from "../../components/image/Images";
 import "./profilePage.css";
-import Gallery from '../../components/gallery/Gallery'
-import Collections from '../../components/collections/Collections'
-import { Link } from "react-router-dom";
+import Gallery from "../../components/gallery/Gallery";
+import Boards from "../../components/boards/Boards";
+import { Link, useParams } from "react-router-dom";
+import apiRequest from "../../utils/ApiRequest";
+import { useQuery } from "@tanstack/react-query";
+
 
 const ProfilePage = () => {
   const [type, setType] = useState("saved");
@@ -12,19 +15,33 @@ const ProfilePage = () => {
     setType(prop);
   };
 
+  const { username } = useParams();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["profile", username],
+    queryFn: () => apiRequest.get(`/users/${username}`).then((res) => res.data),
+  });
+
+  if(isPending) return "Loading...";
+  if(error) return "An error has occured: "+ error;
+
+  if(!data) return "User not found";
+
+  //console.log(data.img);
+
   return (
     <div className="profilePage">
       <Image
         className="profileImage"
-        path="/general/noAvatar.png"
+        path={data.img || "/general/noAvatar.jpg"}
         w={100}
         h={100}
         alt=""
       />
       <Link to="/:username">
-      <h1 className="profileName">John Doe</h1>
+        <h1 className="profileName">{data.displayName}</h1>
       </Link>
-      <span className="profileUserName">@johndoe</span>
+      <span className="profileUserName">{data.username}</span>
       <div className="followCounts">10 followers - 20 followings</div>
       <div className="profileInteractions">
         <Image path="/general/share.svg" alt="" />
@@ -48,8 +65,7 @@ const ProfilePage = () => {
           Saved
         </span>
       </div>
-      {type === "created" ? <Gallery />: <Collections />
-      }
+      {type === "created" ? <Gallery userId={data._id} /> : <Boards userId={data._id} />}
     </div>
   );
 };
