@@ -29,14 +29,14 @@ const pinSchema = new Schema(
     },
     board: {
       type: Schema.Types.ObjectId,
-      ref: "Board",
+      ref: "board",
     },
     tags: {
       type: [String],
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
   },

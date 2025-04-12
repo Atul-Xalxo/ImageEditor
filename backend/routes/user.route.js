@@ -1,7 +1,7 @@
 import express from "express";
-import { test } from "../controller/user.controller.js";
-import User from "..//models/user.model.js";
+import user from "..//models/user.model.js";
 import bcrypt from "bcryptjs";
+import {getUser} from "../controller/user.controller.js";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.post("/create", async (req, res) => {
 
   const newUser = { ...userInfo, hashedPassword };
 
-  await User.create(newUser);
+  await user.create(newUser);
 
   console.log(userInfo);
   return res.json("user created");
@@ -24,10 +24,10 @@ router.post("/create", async (req, res) => {
 //FETCH USER
 
 router.get('/fetch',async(req,res)=>{
-  const users = await User.find({ userame: "me" });
+  const users = await user.find({ userame: "me" });
   return res.json(users)
 })
 
-router.get("/test", test);
+router.get("/:username", getUser);
 
 export default router;

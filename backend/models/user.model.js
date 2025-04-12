@@ -7,11 +7,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
     },
-    userImage: {
+    img: {
       type: String,
     },
     hashedPassword: {
@@ -22,5 +26,4 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-
-export default mongoose.model('user',userSchema)
+export default mongoose.model("user", userSchema);
