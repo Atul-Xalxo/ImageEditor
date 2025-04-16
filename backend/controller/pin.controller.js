@@ -3,7 +3,9 @@ export const getPins = async (req, res) => {
   try {
     const pageNumber = Number(req.query.cursor) || 0;
     const search = req.query.search || "";
-    const userId = req.query.userId || "" 
+    const userId = req.query.userId || "";
+    const boardId = req.query.boardId || "";
+    // console.log("boards",boardId)
     const LIMIT = 21;
     const pins = await Pin.find(
       search
@@ -13,7 +15,11 @@ export const getPins = async (req, res) => {
               { tags: { $in: [search] } },
             ],
           }
-        : userId ? {user:userId}:{}
+        : userId
+        ? { user: userId }
+        : boardId
+        ? { board: boardId }
+        : {}
     )
       .limit(LIMIT)
       .skip(pageNumber * LIMIT);
@@ -36,7 +42,7 @@ export const getPin = async (req, res) => {
     const pinId = req.params.id;
     const pin = await Pin.findById(pinId).populate(
       "user",
-      "username userImage displayName"
+      "username img displayName"
     );
     if (!pin) {
       return res.status(404).json({ message: "Pin not found" });

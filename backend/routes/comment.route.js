@@ -1,9 +1,11 @@
 import express from 'express'
-import { test } from '../controller/comment.controller.js';
+import { getPostComments,addComment} from '../controller/comment.controller.js';
+import { verifyToken } from '../middlewares/verifyTokens.js';
 
 
 const router = express.Router();
 
-router.get('/test',test)
+router.get('/:postId',getPostComments)
+router.get("/",verifyToken,addComment)
 
 export default router;
