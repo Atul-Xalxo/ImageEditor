@@ -7,7 +7,7 @@ import Images from "../image/Images";
 
 const GalleryItem = (props) => {
   const { item } = props;
-
+  
   const optimizedHeight = (372 * item.height) / item.width;
 
   return (

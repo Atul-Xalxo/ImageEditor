@@ -1,48 +1,37 @@
-import React, { useState } from "react";
-import Image from "../image/Images";
+
 import "./comments.css";
+import { useQuery } from "@tanstack/react-query";
+import apiRequest from "../../utils/apiRequest";
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 
-import EmojiPicker from "emoji-picker-react";
+const Comments = ({ id }) => {
+ 
 
-const Comments = () => {
+  const { isPendig, error, data } = useQuery({
+    queryKey: ["comments", id],
+    queryFn: () => apiRequest.get(`/comments/${id}`).then((res) => res.data),
+  });
 
-  const [emoji,setEmoji] = useState(false)
+  if (isPendig) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  if (!data) return <div>No comments</div>;
+  console.log(data);
 
-  const handleEmoji = () =>{
-    setEmoji((prev)=> !prev)
-  }
+  
 
   return (
     <div className="comment">
       <div className="commentList">
-        <span className="commentCount">5 comments</span>
+        <span className="commentCount">
+          {data.length === 0 ? "No comments" : data.length}{" Comments "}  {/* data.length+" "+"Comments" */}
+        </span>
         {/* COMMENT */}
-        <div className="comment">
-          <Image path="/general/noAvatar.png" alt="" />
-          <div className="commentContent">
-            <span className="commentUser">John Doe</span>
-            <p className="commentText">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit
-              natus dolore, iste totam ut delectus? Accusamus, minima! Maiores
-              fuga ex quo ut nemo error, quaerat iste iure labore! Nemo,
-              voluptatem!
-            </p>
-            <span className="commentTime">1h</span>
-          </div>
-        </div>
+        {data?.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
       </div>
-      <form action="" className="commentForm">
-        <input type="text" placeholder="Add a comment" />
-        <div className="emoji">
-          <div onClick={handleEmoji}>😒</div>
-
-          {emoji && (
-            <div className="emojiPicker">
-              <EmojiPicker />
-            </div>
-          )}
-        </div>
-      </form>
+    <CommentForm />
     </div>
   );
 };

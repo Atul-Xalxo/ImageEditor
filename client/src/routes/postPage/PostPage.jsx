@@ -4,7 +4,7 @@ import PostInteractions from "../../components/postInteractions/PostInteractions
 import { Link, useParams } from "react-router-dom";
 import Comments from "../../components/comments/Comments";
 import "./postPage.css";
-import apiRequest from "../../utils/ApiRequest";
+import apiRequest from "../../utils/apiRequest";
 import { useQuery } from "@tanstack/react-query";
 
 const PostPage = () => {
@@ -46,12 +46,12 @@ const PostPage = () => {
         </div>
         <div className="postDetails">
           <PostInteractions />
-         {console.log(data)}
+         {/* {console.log(data)} */}
           <Link to={`/${data.user.username}`} className="postUser">
-            <Image path={data.user.img || "/general/noAvatar.png"}  />
+            <Image src={data.user.img || "/general/noAvatar.png"}  />
             <span>{data.user.displayName}</span>
           </Link>
-          <Comments />
+          <Comments id={data._id}/>
         </div>
       </div>
     </div>

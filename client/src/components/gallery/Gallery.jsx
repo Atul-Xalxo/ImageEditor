@@ -172,30 +172,30 @@ import axios from "axios";
 //   },
 // ];
 
-const fetchPins = async ({ pageParam, search, userId }) => {
- try {
-   const res = await axios.get(
-     `${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${
-       search || ""
-     }&userId=${userId || ""}`,
-   );
-   return res.data;
- } catch (error) {
-  console.log("Error fetching pins:",error);
- }
+const fetchPins = async ({ pageParam, search, userId, boardId }) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}&search=${
+        search || ""
+      }&userId=${userId || ""}&boardId=${boardId || ""}`
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching pins:", error);
+  }
 };
 
-const Gallery = ({ search,userId}) => {
+const Gallery = ({ search, userId, boardId }) => {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery({
-    queryKey: ["pins", search],
-    queryFn: ({ pageParam = 0 }) => fetchPins({ pageParam, search,userId }),
+    queryKey: ["pins"],
+    queryFn: ({ pageParam = 0 }) =>
+      fetchPins({ pageParam, search, userId, boardId }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
   });
 
   if (status === "pending") return "Loading...";
   if (status === "error") return "Something went wrong...";
-  
 
   //console.log(data);
 
@@ -210,9 +210,11 @@ const Gallery = ({ search,userId}) => {
       endMessage={<h4>All Posts Loaded!</h4>}
     >
       <div className="gallery">
-        {allPins?.map((item) => (
-          <GalleryItem key={item._id} item={item} />
-        ))}
+        {allPins?.map(
+          (item) => (
+           (<GalleryItem key={item._id} item={item} />)
+          )
+        )}
       </div>
     </InfiniteScroll>
   );

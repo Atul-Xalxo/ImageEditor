@@ -2,8 +2,9 @@ import React from "react";
 import Image from "../image/Images";
 import "./boards.css";
 import { useQuery } from "@tanstack/react-query";
-import apiRequest from "../../utils/ApiRequest";
+import apiRequest from "../../utils/apiRequest";
 import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 const Boards = ({ userId }) => {
   const { isPending, error, data } = useQuery({
@@ -16,21 +17,22 @@ const Boards = ({ userId }) => {
 
   if (!data) return "User not found";
 
-  console.log(data);
+   console.log(data)
 
   return (
     <div className="collections">
       {/* Collection */}
       {data?.map((board) => (
-        <div className="collection" key={board._id}>
-          <Image path={board.firstPin.media} alt="" />
+        <Link to={`/search?boardId=${board._id}`} className="collection" key={board._id}>
+          <Image src={board.firstPin.media} alt="" />
+          {/* {console.log(board.firstPin.media)} */}
           <div className="collectionInfo">
             <h1>{board.title}</h1>
             <span>
-              {board.pinCount} Pins . {format(board.createdAt)}
+              {board.pinCount}  Pins . {format(board.firstPin.createdAt)}
             </span>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
