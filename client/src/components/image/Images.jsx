@@ -6,7 +6,7 @@ const Images = ({ path, src, alt, className, w, h }) => {
     <>
       <IKImage
         urlEndpoint={import.meta.env.VITE_URL_IK_ENDPOINT}
-        path={path}
+       path={path}
         src={src}
         transformation={[
           {

@@ -17,7 +17,7 @@ const Boards = ({ userId }) => {
 
   if (!data) return "User not found";
 
-   console.log(data)
+   //console.log(data)
 
   return (
     <div className="collections">

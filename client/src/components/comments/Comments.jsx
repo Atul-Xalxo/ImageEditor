@@ -16,7 +16,7 @@ const Comments = ({ id }) => {
   if (isPendig) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   if (!data) return <div>No comments</div>;
-  console.log(data);
+  //console.log(data);
 
   
 
@@ -31,7 +31,7 @@ const Comments = ({ id }) => {
           <Comment key={comment._id} comment={comment} />
         ))}
       </div>
-    <CommentForm />
+    <CommentForm id={id} />
     </div>
   );
 };

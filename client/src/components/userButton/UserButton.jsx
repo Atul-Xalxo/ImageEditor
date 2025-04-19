@@ -9,10 +9,9 @@ const UserButton = () => {
 
   const navigate = useNavigate();
 
-  const {currentUser, removeCurrUser} = useAuthStore();
+  const { currentUser, removeCurrUser } = useAuthStore();
 
-  console.log(currentUser);
-  
+  //console.log(currentUser);
 
   const handleUserOptions = () => {
     setOpen((prev) => !prev);
@@ -36,7 +35,9 @@ const UserButton = () => {
       </div>
       {open && (
         <div className="userOptions">
-          <Link to={`/profile/${currentUser.username}`} className="userOption">Profile</Link>
+          <Link to={`/${currentUser?.username}`} className="userOption">
+            Profile
+          </Link>
           <div className="userOption">Settings</div>
           <div className="userOption" onClick={handleLogout}>
             Logout
