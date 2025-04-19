@@ -1,7 +1,5 @@
 import Comments from "../models/comment.model.js";
 
-import jwt from "jsonwebtoken";
-
 export const getPostComments = async (req, res) => {
   const { postId } = req.params;
 

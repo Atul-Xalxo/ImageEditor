@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.token;
 
@@ -8,7 +10,7 @@ export const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: "Token is not valid" });
     }
 
-   req.userId = payload.userId;
+    req.userId = payload.userId;
     next();
   });
 };

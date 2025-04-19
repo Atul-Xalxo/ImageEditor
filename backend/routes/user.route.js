@@ -1,7 +1,8 @@
 import express from "express";
 // import user from "..//models/user.model.js";
 // import bcrypt from "bcryptjs";
-import {getUser, loginUser, logoutUser, registerUser} from "../controller/user.controller.js";
+import {getUser, loginUser, logoutUser, registerUser, followUser} from "../controller/user.controller.js";
+import { verifyToken } from "../middlewares/verifyTokens.js";
 
 const router = express.Router();
 
@@ -32,5 +33,6 @@ router.get("/:username", getUser);
 router.post("/auth/register",registerUser);
 router.post("/auth/login",loginUser);
 router.post("/auth/logout",logoutUser);
+router.post("/follow/:username",verifyToken,followUser);
 
 export default router;

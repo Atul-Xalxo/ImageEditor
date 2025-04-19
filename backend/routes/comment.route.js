@@ -6,6 +6,6 @@ import { verifyToken } from '../middlewares/verifyTokens.js';
 const router = express.Router();
 
 router.get('/:postId',getPostComments)
-router.get("/",verifyToken,addComment)
+router.post("/",verifyToken,addComment)
 
 export default router;
